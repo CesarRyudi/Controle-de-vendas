@@ -147,7 +147,6 @@ const updateVenda = (req, res) => {
         qt_cookies,
         forma_pagamento,
         observacao,
-        produtos,
       } = newVenda;
       pool.query(
         queries.updateVenda,
@@ -160,7 +159,6 @@ const updateVenda = (req, res) => {
           qt_cookies,
           forma_pagamento,
           observacao,
-          produtos,
         ],
         (error, results) => {
           if (error) throw error;
