@@ -13,6 +13,9 @@ app.get("/", (req, res) => {
     res.status(200).send("Hello world!");
 })
 
+
+// app.use("/clientes", clientesRoutes);
+
 app.use('/api/v1/clientes', clientesRoutes);
 app.use("/api/v1/produtos", produtosRoutes);
 app.use("/api/v1/vendas", vendasRoutes);
