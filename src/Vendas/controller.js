@@ -139,10 +139,29 @@ const updateVenda = (req, res) => {
     if (!results.rows.length) res.send(`Venda não encontrado no id ${id}`);
     else {
       const newVenda = Object.assign({}, results.rows[0], req.body);
-      const { nome, recheio, descricao, preco, preco_kit } = newVenda;
+      const {
+        id_clientes,
+        data_venda,
+        entrega,
+        valor_total,
+        qt_cookies,
+        forma_pagamento,
+        observacao,
+        produtos,
+      } = newVenda;
       pool.query(
         queries.updateVenda,
-        [id, nome, recheio, descricao, preco, preco_kit],
+        [
+          id,
+          id_clientes,
+          data_venda,
+          entrega,
+          valor_total,
+          qt_cookies,
+          forma_pagamento,
+          observacao,
+          produtos,
+        ],
         (error, results) => {
           if (error) throw error;
           const resposta = [{ msg: "Venda atualizado com sucesso!" }, newVenda];
