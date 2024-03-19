@@ -2,9 +2,47 @@ const pool = require("../../db");
 const queries = require("./queries");
 
 const getVendas = (req, res) => {
+  function converterData(dataString) {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, "0");
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const ano = String(data.getFullYear()).slice(2);
+    const hora = String(data.getUTCHours()).padStart(2, "0");
+    const minutos = String(data.getMinutes()).padStart(2, "0");
+
+    console.log(data);
+    console.log(String(dataString));
+    console.log(hora, minutos);
+
+    return {
+      data: `${dia}/${mes}/${ano}`,
+      hora: `${hora}:${minutos}`,
+    };
+  }
+
   pool.query(queries.getVendas, (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+
+    pool.query(queries.getClientes, (error, clientesResult) => {
+      if (error) throw error;
+
+      const clientes = clientesResult.rows;
+      const venda = results.rows[0];
+
+      const cliente = clientes.find(
+        (cliente) => cliente.id === venda.id_clientes
+      );
+
+      const { data, hora } = converterData(venda.data_venda);
+      venda.data = data;
+      venda.hora = hora;
+
+      const vendaComCliente = {
+        ...venda,
+        nome: cliente.nome,
+      };
+      res.status(200).json(vendaComCliente);
+    });
   });
 };
 
