@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 
-const clientesRoutes = require('./src/Clientes/routes')
+const clientesRoutes = require("./src/Clientes/routes");
 const produtosRoutes = require("./src/Produtos/routes");
 const vendasRoutes = require("./src/Vendas/routes");
 
@@ -18,19 +18,15 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE"], // Adicione os métodos HTTP necessários
 };
 app.use(cors(corsOptions));
 
-
-
 app.get("/", (req, res) => {
-    res.status(200).send("Hello world!");
-})
+  res.status(200).send("Hello world!");
+});
 
-
-// app.use("/clientes", clientesRoutes);
-
-app.use('/api/v1/clientes', clientesRoutes);
+app.use("/api/v1/clientes", clientesRoutes);
 app.use("/api/v1/produtos", produtosRoutes);
 app.use("/api/v1/vendas", vendasRoutes);
 
