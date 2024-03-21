@@ -12,8 +12,8 @@ const port = process.env.PORT;
 app.use(express.json());
 
 const allowedOrigins = [
-  "https://haru-cookies.vercel.app/",
-  "http://localhost:5173/",
+  "https://haru-cookies.vercel.app",
+  "http://localhost:5173",
 ];
 
 const corsOptions = {
